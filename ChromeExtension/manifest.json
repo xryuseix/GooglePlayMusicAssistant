@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "js": ["jquery.min.js", "content_script.js"],
-      "matches": ["https://*/*"]
+      "matches": ["https://play.google.com/music/listen#/all"]
     }
   ]
 }

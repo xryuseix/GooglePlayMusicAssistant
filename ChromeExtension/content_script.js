@@ -1,8 +1,24 @@
 chrome.runtime.onMessage.addListener(function () {
-  $(".header-row").append(
-    '<th data-col="playlist">プレイリスト</th>'
-  );
-  $('.song-table [data-col="playlist"]').css("width", "32%");
-  $('.song-table th[data-col="playlist"]').css("text-align", "left");
-});
+  const headerCell = document.createElement("th");
+  const headerRow = document.querySelector(".header-row");
 
+  headerCell.innerText = "プレイリスト";
+  headerCell.setAttribute("data-col", "playlist");
+  headerCell.style.width = "32%";
+
+  headerRow.insertBefore(
+    headerCell,
+    headerRow.querySelector('[data-col="play-count"]')
+  );
+
+  document.querySelectorAll("tr.song-row").forEach((songRow) => {
+    const cell = document.createElement("td");
+    cell.innerText = "hoge"; // ここでプレイリストの情報を入れる
+    cell.setAttribute("data-col", "playlist");
+    cell.style.width = "32%";
+    songRow.insertBefore(
+      cell,
+      songRow.querySelector('[data-col="play-count"]')
+    );
+  });
+});
