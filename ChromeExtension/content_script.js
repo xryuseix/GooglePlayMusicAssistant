@@ -1,3 +1,4 @@
+$("body").prepend('<div class="txt">Hello World!</div>');
 chrome.runtime.onMessage.addListener(function () {
   const headerCell = document.createElement("th");
   const headerRow = document.querySelector(".header-row");
@@ -22,3 +23,9 @@ chrome.runtime.onMessage.addListener(function () {
     );
   });
 });
+
+function getPlayLists() {
+  document.querySelectorAll("tr.song-row").forEach((songRow) => {
+    console.log(songRow.dataset.id);
+  });
+}
