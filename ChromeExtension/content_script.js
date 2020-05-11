@@ -1,5 +1,6 @@
 $("body").prepend('<div class="txt">Hello World!</div>');
 chrome.runtime.onMessage.addListener(function () {
+  testStorage();
   const headerCell = document.createElement("th");
   const headerRow = document.querySelector(".header-row");
 
@@ -25,7 +26,26 @@ chrome.runtime.onMessage.addListener(function () {
 });
 
 function getPlayLists() {
+  const title = document.querySelector(
+    "div.title-row.style-scope.gpm-detail-page-header > h2"
+  ).innerText;
+  let musicIds = [];
   document.querySelectorAll("tr.song-row").forEach((songRow) => {
-    console.log(songRow.dataset.id);
+    musicIds.push(songRow.dataset.id);
+  });
+  return [title, musicIds];
+}
+
+function testStorage() {
+  chrome.storage.local.set({ key: "334" }, function () {
+    console.log("stored");
+  });
+  test2();
+}
+
+function test2() {
+  chrome.storage.local.get("key", function (value) {
+    var value_data = value.key;
+    console.log(value_data);
   });
 }

@@ -13,5 +13,8 @@
       "js": ["jquery.min.js", "content_script.js"],
       "matches": ["https://play.google.com/music/listen*"]
     }
+  ],
+  "permissions": [
+    "storage"
   ]
 }
