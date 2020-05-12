@@ -1,6 +1,19 @@
 $("body").prepend('<div class="txt">Hello World!</div>');
-chrome.runtime.onMessage.addListener(function () {
-  testStorage();
+
+chrome.runtime.onMessage.addListener(function (msg) {
+  const url = location.href.slice(0, 41);
+  if (msg.query === "post") {
+    if (url == "https://play.google.com/music/listen#/all") {
+      postPlayLists();
+    }
+  } else if (msg.query === "get") {
+    if (url == "https://play.google.com/music/listen#/pl/") {
+      getPlayLists();
+    }
+  }
+});
+
+function postPlayLists() {
   const headerCell = document.createElement("th");
   const headerRow = document.querySelector(".header-row");
 
@@ -23,7 +36,8 @@ chrome.runtime.onMessage.addListener(function () {
       songRow.querySelector('[data-col="play-count"]')
     );
   });
-});
+  console.log("postPlayList");
+}
 
 function getPlayLists() {
   const title = document.querySelector(
@@ -33,19 +47,18 @@ function getPlayLists() {
   document.querySelectorAll("tr.song-row").forEach((songRow) => {
     musicIds.push(songRow.dataset.id);
   });
+  console.log("getPlayList");
   return [title, musicIds];
 }
 
-function testStorage() {
-  chrome.storage.local.set({ key: "334" }, function () {
-    console.log("stored");
+function storageSet(value) {
+  chrome.storage.local.set(value, function () {
+    console.log("stored", value);
   });
-  test2();
 }
 
-function test2() {
-  chrome.storage.local.get("key", function (value) {
-    var value_data = value.key;
-    console.log(value_data);
+function storageGet(key) {
+  chrome.storage.local.get(function (value) {
+    return value[key];
   });
 }
